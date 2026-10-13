@@ -1,0 +1,731 @@
+/* ───────────── The film: seven scenes over one fixed WebGL stage ───────────── */
+
+html {
+  scroll-behavior: auto;
+}
+
+.film {
+  position: relative;
+  z-index: 1;
+}
+
+/* A scene is a tall scroll track; its stage sticks to the viewport for the length of the take.
+   (CSS sticky instead of a pin-spacer: no reflow, no jump on mobile URL-bar resizes.) */
+.scene {
+  position: relative;
+  height: var(--len, 300vh);
+}
+.scene__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.scene--revelation { --len: 330vh; }
+.scene--anatomy { --len: 440vh; }
+.scene--essence { --len: 520vh; }
+.scene--presence { --len: 330vh; }
+.scene--desire { --len: 290vh; }
+.scene--statement { --len: 210vh; }
+
+@media (max-width: 899px) {
+  .scene--revelation { --len: 250vh; }
+  .scene--anatomy { --len: 330vh; }
+  .scene--essence { --len: 380vh; }
+  .scene--presence { --len: 250vh; }
+  .scene--desire { --len: 230vh; }
+  .scene--statement { --len: 170vh; }
+}
+
+/* ── 01 · Hero ───────────────────────────────── */
+.hero {
+  position: relative;
+  height: 100svh;
+}
+.hero__foot {
+  position: absolute;
+  inset: auto var(--gutter) clamp(1.75rem, 4.5vh, 3rem);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 2rem;
+}
+.hero__product {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  color: var(--ivory);
+}
+.hero__rule {
+  display: inline-block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--gold);
+}
+.hero__line {
+  justify-self: end;
+  margin: 0;
+  max-width: 19ch;
+  text-align: right;
+  font-size: clamp(1.15rem, 0.9rem + 0.8vw, 1.6rem);
+  line-height: 1.25;
+  color: rgb(240 233 223 / 0.86);
+}
+.hero__cue {
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+  color: rgb(240 233 223 / 0.7);
+  padding: 0.5rem;
+  transition: color 0.4s var(--ease-out);
+}
+.hero__cue:hover {
+  color: var(--ivory);
+}
+.hero__cue-track {
+  position: relative;
+  width: 1px;
+  height: 3.5rem;
+  overflow: hidden;
+}
+.hero__cue-line {
+  position: absolute;
+  inset: 0;
+  background: rgb(240 233 223 / 0.25);
+}
+.hero__cue-dot {
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 3px;
+  height: 0.9rem;
+  background: var(--gold);
+  animation: cue 2.6s var(--ease-in-out) infinite;
+}
+@keyframes cue {
+  0% { transform: translateY(-1rem); opacity: 0; }
+  25% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(3.5rem); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__cue-dot {
+    animation: none;
+    transform: translateY(1.2rem);
+  }
+}
+@media (max-width: 899px) {
+  .hero__foot {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    bottom: clamp(1.5rem, 5vh, 3rem);
+    gap: 1.25rem;
+  }
+  .hero__line {
+    justify-self: center;
+    text-align: center;
+    order: -1;
+  }
+  .hero__product {
+    order: -2;
+  }
+}
+
+/* ── 02 · Revelation ─────────────────────────── */
+.reveal {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: center;
+  padding: var(--header-h) var(--gutter) 0;
+}
+.reveal__title {
+  grid-column: 1;
+  align-self: end;
+  margin: 0 0 18vh;
+  font-size: clamp(2.4rem, 0.9rem + 3.1vw, 4.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  color: var(--ivory);
+}
+.reveal__copy {
+  grid-column: 3;
+  justify-self: end;
+  max-width: 23rem;
+  display: grid;
+  gap: 1.6rem;
+}
+.reveal__rule {
+  display: block;
+  width: 3rem;
+  height: 1px;
+  background: var(--gold);
+  transform-origin: left;
+}
+.reveal__body {
+  margin: 0;
+  color: rgb(240 233 223 / 0.78);
+  line-height: 1.7;
+}
+.reveal__facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+  color: var(--gold);
+  font-size: 0.625rem;
+}
+@media (max-width: 899px) {
+  .reveal {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    align-items: start;
+    padding: calc(var(--header-h) + 0.5rem) var(--gutter) 2.5rem;
+  }
+  .reveal__title {
+    grid-column: 1;
+    align-self: start;
+    margin: 0;
+    font-size: clamp(2.2rem, 9.5vw, 3.2rem);
+  }
+  .reveal__copy {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: start;
+    max-width: 30rem;
+    gap: 1rem;
+    padding: 1.1rem 0 0;
+    background: linear-gradient(to top, rgb(8 8 8 / 0.9), rgb(8 8 8 / 0.65) 70%, transparent);
+  }
+  .reveal__body {
+    font-size: 0.95rem;
+  }
+}
+
+/* ── 03 · Anatomy ────────────────────────────── */
+.anatomy {
+  padding: var(--header-h) var(--gutter) 0;
+}
+.anatomy__title {
+  position: absolute;
+  top: calc(var(--header-h) + 3vh);
+  left: var(--gutter);
+  margin: 0;
+  font-size: clamp(2.2rem, 1rem + 3vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--ivory);
+}
+.anatomy__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.anatomy__lines polyline {
+  fill: none;
+  stroke: rgb(196 167 125 / 0.75);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.anatomy__lines circle {
+  fill: var(--gold);
+}
+.anatomy__callouts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.callout {
+  position: absolute;
+  top: var(--y);
+  width: min(19rem, 22vw);
+  display: grid;
+  gap: 0.6rem;
+}
+.callout[data-side="right"] {
+  left: 71%;
+  padding-left: 1.5rem;
+}
+.callout[data-side="left"] {
+  right: 71%;
+  padding-right: 1.5rem;
+  text-align: right;
+  justify-items: end;
+}
+.callout[data-callout="cap"] { --y: 22%; }
+.callout[data-callout="glass"] { --y: 58%; }
+.callout[data-callout="essence"] { --y: 38%; }
+.callout[data-callout="volume"] { --y: 74%; }
+.callout__pin {
+  position: absolute;
+  top: 0.35rem;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+}
+.callout[data-side="right"] .callout__pin {
+  left: 0;
+}
+.callout[data-side="left"] .callout__pin {
+  right: 0;
+}
+.callout__label {
+  margin: 0;
+  color: var(--gold);
+}
+.callout__text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgb(240 233 223 / 0.7);
+  max-width: 30ch;
+}
+@media (max-width: 899px) {
+  .anatomy__title {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+  .anatomy__callouts {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: clamp(1.25rem, 4vh, 2.5rem);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem 1.25rem;
+  }
+  .callout,
+  .callout[data-side="left"],
+  .callout[data-side="right"] {
+    position: relative;
+    inset: auto;
+    top: auto;
+    width: auto;
+    padding: 0 0 0 1.1rem;
+    text-align: left;
+    justify-items: start;
+    gap: 0.35rem;
+  }
+  .callout[data-side="left"] .callout__pin,
+  .callout[data-side="right"] .callout__pin {
+    left: 0;
+    right: auto;
+    top: 0.25rem;
+  }
+  /* Pair each label with the side of the frame its anchor sits on, so lines never cross. */
+  .callout[data-callout="essence"] { order: 1; }
+  .callout[data-callout="cap"] { order: 2; }
+  .callout[data-callout="volume"] { order: 3; }
+  .callout[data-callout="glass"] { order: 4; }
+  .callout__label {
+    font-size: 0.5625rem;
+    letter-spacing: 0.22em;
+  }
+  .callout__text {
+    font-size: 0.75rem;
+    line-height: 1.45;
+  }
+}
+
+/* ── 04 · Essence ────────────────────────────── */
+.essence__intro {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1.25rem;
+  text-align: center;
+  padding-inline: var(--gutter);
+}
+.essence__intro h2 {
+  margin: 0;
+  font-size: var(--fs-display);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.essence__lede {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--fs-lead);
+  color: rgb(240 233 223 / 0.78);
+}
+.essence__notes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.note {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(6rem, 15vh, 10rem);
+  display: grid;
+  gap: 1.4rem;
+}
+.js .note {
+  visibility: hidden;
+}
+.note__head {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 1.6rem;
+}
+.note__name {
+  font-size: clamp(3.2rem, 1rem + 8vw, 10rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: var(--ivory);
+}
+.note__text {
+  margin: 0;
+  max-width: 34ch;
+  font-size: var(--fs-lead);
+  font-family: var(--font-serif);
+  line-height: 1.4;
+  color: rgb(240 233 223 / 0.8);
+}
+/* Each note owns its composition: bergamot high and airy, amber centred and oversized,
+   vetiver & oud low and wide like smoke settling. */
+.note[data-note="0"] {
+  top: calc(var(--header-h) + 9vh);
+  bottom: auto;
+  left: auto;
+  max-width: 40rem;
+  justify-items: end;
+  text-align: right;
+}
+.note[data-note="0"] .note__name {
+  font-size: clamp(3rem, 1rem + 6.4vw, 8.5rem);
+  letter-spacing: 0.015em;
+}
+.note[data-note="1"] {
+  top: 50%;
+  bottom: auto;
+  translate: 0 -50%;
+  justify-items: center;
+  text-align: center;
+}
+.note[data-note="1"] .note__head {
+  justify-content: center;
+}
+.note[data-note="1"] .note__name {
+  font-size: clamp(3.6rem, 0.6rem + 11.5vw, 15rem);
+  line-height: 0.88;
+}
+.note[data-note="2"] {
+  bottom: clamp(6.5rem, 15vh, 9rem);
+  grid-template-columns: auto minmax(0, 22rem);
+  align-items: end;
+  column-gap: clamp(2rem, 4vw, 4.5rem);
+}
+.note[data-note="2"] .note__name {
+  font-size: clamp(3.4rem, 0.8rem + 9.6vw, 12.5rem);
+  letter-spacing: -0.035em;
+  line-height: 0.88;
+}
+.note[data-note="2"] .note__text {
+  padding-bottom: 0.6em;
+}
+
+/* Top / Heart / Base: a horizontal reading of where the visitor is inside the fragrance. */
+.essence__meter {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(1.4rem, 2.6vw, 2.2rem);
+  width: min(20rem, 34vw);
+  display: grid;
+  gap: 0.7rem;
+}
+.essence__meter-track {
+  position: relative;
+  order: 2;
+  height: 1px;
+  width: 100%;
+  background: rgb(240 233 223 / 0.22);
+}
+.essence__meter-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+.essence__meter ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-label);
+  color: var(--ivory);
+}
+.essence__meter li {
+  line-height: 1;
+  opacity: 0.55;
+}
+@media (max-width: 899px) {
+  .note {
+    gap: 0.9rem;
+  }
+  .note[data-note="0"] {
+    top: calc(var(--header-h) + 4vh);
+  }
+  .note[data-note="2"] {
+    bottom: 5.5rem;
+    grid-template-columns: 1fr;
+  }
+  .note__name,
+  .note[data-note="0"] .note__name,
+  .note[data-note="2"] .note__name {
+    font-size: clamp(2.8rem, 15vw, 4.5rem);
+  }
+  .note[data-note="1"] .note__name {
+    font-size: clamp(3rem, 17vw, 5rem);
+  }
+  .note__text {
+    font-size: 1.05rem;
+  }
+  .essence__meter {
+    left: var(--gutter);
+    width: auto;
+    bottom: 1.6rem;
+  }
+}
+
+/* ── 05 · Presence (kinetic manifesto) ───────── */
+.kinetic {
+  display: grid;
+  align-content: center;
+  padding: var(--header-h) var(--gutter) 0;
+}
+.kinetic__lines {
+  margin: 0;
+  display: grid;
+  gap: 0.02em;
+  font-size: min(8.4vw, 15.5vh);
+  line-height: 0.94;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  color: var(--ivory);
+}
+.kinetic__line {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.24em;
+  will-change: transform;
+}
+.kinetic__line--1 {
+  padding-left: 16vw;
+}
+.kinetic__line--2 {
+  padding-left: 5vw;
+}
+.kinetic__line--3 {
+  justify-content: flex-end;
+}
+.kinetic__word {
+  display: inline-block;
+  overflow: hidden;
+  padding-block: 0.06em 0.1em;
+  margin-block: -0.06em -0.1em;
+}
+.kinetic__word > span {
+  display: inline-block;
+  transform-origin: 0 100%;
+}
+.kinetic__hair {
+  position: absolute;
+  height: 1px;
+  background: rgb(196 167 125 / 0.45);
+}
+.kinetic__hair--a {
+  top: 20%;
+  left: 0;
+  width: 34vw;
+  transform-origin: left;
+}
+.kinetic__hair--b {
+  bottom: 18%;
+  right: 0;
+  width: 26vw;
+  transform-origin: right;
+}
+.kinetic__margins {
+  position: absolute;
+  inset: var(--header-h) 0 0 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.kinetic__margin {
+  position: absolute;
+  top: 0;
+  font-size: 0.625rem;
+  color: rgb(240 233 223 / 0.55);
+  writing-mode: vertical-rl;
+  will-change: transform;
+}
+/* One caption rides the outer edge, outside the type measure, faster than the lines. */
+.kinetic__margin--0 {
+  left: calc(var(--gutter) * 0.32);
+}
+@media (max-width: 899px) {
+  .kinetic__lines {
+    font-size: clamp(2rem, 9.6vw, 4.5rem);
+  }
+  .kinetic__line--1 {
+    padding-left: 6vw;
+  }
+  .kinetic__line--2 {
+    padding-left: 0;
+  }
+  .kinetic__margins,
+  .kinetic__hair--a {
+    display: none;
+  }
+}
+
+/* ── 06 · Desire (daylight) ──────────────────── */
+.desire {
+  color: var(--carbon);
+}
+.desire__handle {
+  position: absolute;
+  top: var(--header-h);
+  bottom: 0;
+  left: 48%;
+  right: 0;
+  touch-action: pan-y;
+}
+.desire__copy {
+  position: absolute;
+  left: var(--gutter);
+  top: 50%;
+  translate: 0 -46%;
+  width: min(32rem, 40vw);
+  display: grid;
+  gap: 1.6rem;
+  pointer-events: none;
+}
+.desire__copy > * {
+  pointer-events: auto;
+}
+.desire__name {
+  margin: 0;
+  font-size: clamp(3rem, 1.2rem + 5vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+.desire__rule {
+  display: block;
+  width: 4rem;
+  height: 1px;
+  background: var(--carbon);
+  transform-origin: left;
+}
+.desire__specs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1.75rem;
+  color: var(--bronze);
+}
+.desire__quote {
+  margin: 0;
+  max-width: 22ch;
+  font-size: clamp(1.3rem, 1rem + 0.9vw, 1.85rem);
+  line-height: 1.3;
+}
+.desire__cta {
+  margin-top: 0.6rem;
+}
+.desire__hint {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0;
+  font-size: var(--fs-label);
+  color: rgb(20 20 20 / 0.66);
+}
+.desire__hint-icon svg {
+  display: block;
+  width: 1.75rem;
+  height: 0.7rem;
+}
+.desire :focus-visible {
+  outline-color: var(--carbon);
+}
+@media (max-width: 899px) {
+  .desire__handle {
+    left: 0;
+    top: var(--header-h);
+    bottom: 48%;
+  }
+  .desire__copy {
+    top: auto;
+    bottom: clamp(1.5rem, 4vh, 2.5rem);
+    translate: none;
+    width: auto;
+    right: var(--gutter);
+    gap: 0.9rem;
+  }
+  .desire__name {
+    font-size: clamp(2.4rem, 11vw, 3.4rem);
+    display: flex;
+    gap: 0.25em;
+    flex-wrap: wrap;
+  }
+  .desire__quote {
+    font-size: 1.1rem;
+  }
+  .desire__cta .mbtn {
+    width: 100%;
+    max-width: 28rem;
+    justify-content: space-between;
+  }
+}
+
+/* ── 07 · Final statement ────────────────────── */
+.statement {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: clamp(1.25rem, 3vh, 2.25rem);
+  text-align: center;
+  color: var(--ivory);
+}
+.statement__word .mask,
+.pre__word .mask {
+  /* Room for the acute accent on É above a tight line-height. */
+  padding-top: 0.34em;
+  margin-top: -0.34em;
+}
+.statement__word {
+  display: flex;
+  margin: 0;
+  font-size: var(--fs-monument);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+}
+.statement__rule {
+  display: block;
+  width: min(24vw, 18rem);
+  height: 1px;
+  background: var(--gold);
+}
+.statement__signature {
+  margin: 0;
+  color: var(--gold);
+  letter-spacing: 0.5em;
+  margin-right: -0.5em;
+}

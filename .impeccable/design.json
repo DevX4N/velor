@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-12T00:00:00Z",
+  "title": "Design System: VÉLOR Nº 01",
+  "extensions": {
+    "colorMeta": {
+      "champagne-gold": { "role": "primary", "displayName": "Champagne Gold", "canonical": "#c4a77d", "tonalRamp": ["oklch(15% 0.03 77)", "oklch(25% 0.04 77)", "oklch(35% 0.05 77)", "oklch(45% 0.055 77)", "oklch(55% 0.058 77)", "oklch(65% 0.058 77)", "oklch(80% 0.05 77)", "oklch(95% 0.02 77)"] },
+      "bronze": { "role": "secondary", "displayName": "Bronze", "canonical": "#6b5634", "tonalRamp": ["oklch(15% 0.03 77)", "oklch(25% 0.04 77)", "oklch(35% 0.048 77)", "oklch(45% 0.05 77)", "oklch(55% 0.05 77)", "oklch(65% 0.048 77)", "oklch(80% 0.035 77)", "oklch(95% 0.015 77)"] },
+      "cyclorama-black": { "role": "neutral", "displayName": "Cyclorama Black", "canonical": "#080808", "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(35% 0 0)", "oklch(45% 0 0)", "oklch(55% 0 0)", "oklch(65% 0 0)", "oklch(80% 0 0)", "oklch(95% 0 0)"] },
+      "carbon": { "role": "neutral", "displayName": "Carbon", "canonical": "#141414", "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(35% 0 0)", "oklch(45% 0 0)", "oklch(55% 0 0)", "oklch(65% 0 0)", "oklch(80% 0 0)", "oklch(95% 0 0)"] },
+      "graphite": { "role": "neutral", "displayName": "Graphite", "canonical": "#292929", "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(35% 0 0)", "oklch(45% 0 0)", "oklch(55% 0 0)", "oklch(65% 0 0)", "oklch(80% 0 0)", "oklch(95% 0 0)"] },
+      "daylight-ivory": { "role": "neutral", "displayName": "Daylight Ivory", "canonical": "#f0e9df", "tonalRamp": ["oklch(15% 0.01 75)", "oklch(25% 0.012 75)", "oklch(35% 0.014 75)", "oklch(45% 0.015 75)", "oklch(55% 0.016 75)", "oklch(65% 0.016 75)", "oklch(80% 0.015 75)", "oklch(93.5% 0.014 75)"] }
+    },
+    "typographyMeta": {
+      "monument": { "displayName": "Monument", "purpose": "The VÉLOR wordmark in the final statement only." },
+      "display": { "displayName": "Display", "purpose": "Scene titles at full presence; note names scale beyond it when a note owns the frame." },
+      "headline": { "displayName": "Headline", "purpose": "Scene titles sharing the frame with the bottle; daylight product name." },
+      "lead": { "displayName": "Lead", "purpose": "Serif one-liners, note descriptions, hero line, dossier lede." },
+      "body": { "displayName": "Body", "purpose": "Descriptive copy, Jost 300, ivory at 70-80% on dark." },
+      "small": { "displayName": "Small", "purpose": "Credits, legal notes, skip link." },
+      "label": { "displayName": "Label", "purpose": "Uppercase Jost caps for nav, specs, buttons, callout labels, meter ticks." },
+      "label-micro": { "displayName": "Label Micro", "purpose": "Slate, material facts, vertical margin caption, footer base line." }
+    },
+    "toneVariables": [
+      { "name": "--fg", "dark": "var(--ivory)", "light": "var(--carbon)", "purpose": "Chrome foreground; flips with the 3D set." },
+      { "name": "--fg-dim", "dark": "rgb(240 233 223 / 0.62)", "light": "rgb(20 20 20 / 0.66)", "purpose": "Resting nav links, slate text." },
+      { "name": "--fg-faint", "dark": "rgb(240 233 223 / 0.22)", "light": "rgb(20 20 20 / 0.2)", "purpose": "Unfilled progress tracks." },
+      { "name": "--accent", "dark": "var(--gold)", "light": "var(--bronze)", "purpose": "Underlines, slate scene number, focus outline." }
+    ],
+    "shadows": [],
+    "overlays": [
+      { "name": "dossier-veil", "value": "background: rgb(41 37 32 / 0.28); backdrop-filter: blur(6px)", "purpose": "Warm veil behind the dossier sheet; the set stays legible as a set." },
+      { "name": "film-grain", "value": "fractal-noise SVG, opacity 0.055 (0.08 multiply on light), 0.9s steps(6) loop", "purpose": "Fixed texture over the whole take; stops under reduced motion." }
+    ],
+    "motion": [
+      { "name": "velor.out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default GSAP ease (1.2s) and CSS --ease-out: a camera dolly settling. Reveals, fills, underlines." },
+      { "name": "velor.inOut", "value": "cubic-bezier(0.7, 0, 0.2, 1)", "purpose": "Wipes and lines: menu and dossier clip-path, preloader line, scroll cue." },
+      { "name": "velor.in", "value": "cubic-bezier(0.6, 0, 0.86, 0.3)", "purpose": "Exits: preloader out, dossier close, leader lines retracting." },
+      { "name": "scrub", "value": "0.6", "purpose": "ScrollTrigger scrub smoothing for every scene timeline." },
+      { "name": "mask-reveal", "value": "yPercent 130 -> 0", "purpose": "Line/word entrance inside a clipping mask." },
+      { "name": "button-fill", "value": "clip-path inset(100% 0 0 0) -> inset(0), 0.7s velor.out", "purpose": "House button hover fill rising from the baseline." },
+      { "name": "magnet", "value": "0.28 factor, 0.6s quickTo", "purpose": "Fine-pointer lean of magnetic buttons." }
+    ],
+    "breakpoints": [
+      { "name": "compact", "value": "899px", "purpose": "Header collapses to toggle, slate hides, scene copy drops to the foot of the frame, shorter scene tracks." },
+      { "name": "narrow", "value": "560px", "purpose": "Dossier definition lists stack to one column." }
+    ]
+  },
+  "components": [
+    {
+      "name": "House Button (Ink)",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Primary action on the ivory set: hairline frame, carbon fill rises from the baseline, label rolls to its duplicate.",
+      "html": "<button class=\"ds-mbtn ds-mbtn--ink\"><span class=\"ds-mbtn__fill\"></span><span class=\"ds-mbtn__label\"><span class=\"ds-mbtn__roll\"><span>Explore the fragrance</span><span aria-hidden=\"true\">Explore the fragrance</span></span></span><svg class=\"ds-mbtn__arrow\" viewBox=\"0 0 24 10\" aria-hidden=\"true\"><path d=\"M0 5h22M18 1l4 4-4 4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1\"/></svg></button>",
+      "css": ".ds-mbtn { position: relative; display: inline-flex; align-items: center; gap: 1.1rem; min-height: 3.5rem; padding: 0 1.75rem 0 2rem; border: 1px solid currentColor; border-radius: 0; background: none; overflow: hidden; isolation: isolate; cursor: pointer; font-family: 'Jost', ui-sans-serif, system-ui, sans-serif; font-size: 0.6875rem; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; } .ds-mbtn--ink { color: #141414; } .ds-mbtn__fill { position: absolute; inset: 0; z-index: -1; background: #141414; clip-path: inset(100% 0 0 0); transition: clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1); } .ds-mbtn__label { position: relative; display: block; height: 1.4em; overflow: hidden; line-height: 1.4; } .ds-mbtn__roll { display: flex; flex-direction: column; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); } .ds-mbtn__arrow { width: 1.5rem; height: 0.65rem; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); } .ds-mbtn:hover, .ds-mbtn:focus-visible { color: #f0e9df; transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s; } .ds-mbtn:hover .ds-mbtn__fill, .ds-mbtn:focus-visible .ds-mbtn__fill { clip-path: inset(0 0 0 0); } .ds-mbtn:hover .ds-mbtn__roll, .ds-mbtn:focus-visible .ds-mbtn__roll { transform: translateY(-50%); } .ds-mbtn:hover .ds-mbtn__arrow, .ds-mbtn:focus-visible .ds-mbtn__arrow { transform: translateX(0.35rem); } .ds-mbtn:focus-visible { outline: 1px solid #141414; outline-offset: 5px; } .ds-mbtn:active .ds-mbtn__fill { background: #292929; }"
+    },
+    {
+      "name": "House Button (Ivory)",
+      "kind": "button",
+      "refersTo": "button-ivory",
+      "description": "The same button on the dark cyclorama: ivory frame, ivory fill, carbon text on hover.",
+      "html": "<div style=\"background:#080808;padding:2rem\"><button class=\"ds-mbtn-iv\"><span class=\"ds-mbtn-iv__fill\"></span><span class=\"ds-mbtn-iv__label\"><span class=\"ds-mbtn-iv__roll\"><span>Open the dossier</span><span aria-hidden=\"true\">Open the dossier</span></span></span><svg class=\"ds-mbtn-iv__arrow\" viewBox=\"0 0 24 10\" aria-hidden=\"true\"><path d=\"M0 5h22M18 1l4 4-4 4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1\"/></svg></button></div>",
+      "css": ".ds-mbtn-iv { position: relative; display: inline-flex; align-items: center; gap: 1.1rem; min-height: 3.5rem; padding: 0 1.75rem 0 2rem; border: 1px solid currentColor; border-radius: 0; background: none; color: #f0e9df; overflow: hidden; isolation: isolate; cursor: pointer; font-family: 'Jost', ui-sans-serif, system-ui, sans-serif; font-size: 0.6875rem; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; } .ds-mbtn-iv__fill { position: absolute; inset: 0; z-index: -1; background: #f0e9df; clip-path: inset(100% 0 0 0); transition: clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1); } .ds-mbtn-iv__label { position: relative; display: block; height: 1.4em; overflow: hidden; line-height: 1.4; } .ds-mbtn-iv__roll { display: flex; flex-direction: column; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); } .ds-mbtn-iv__arrow { width: 1.5rem; height: 0.65rem; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); } .ds-mbtn-iv:hover, .ds-mbtn-iv:focus-visible { color: #141414; transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s; } .ds-mbtn-iv:hover .ds-mbtn-iv__fill, .ds-mbtn-iv:focus-visible .ds-mbtn-iv__fill { clip-path: inset(0 0 0 0); } .ds-mbtn-iv:hover .ds-mbtn-iv__roll, .ds-mbtn-iv:focus-visible .ds-mbtn-iv__roll { transform: translateY(-50%); } .ds-mbtn-iv:hover .ds-mbtn-iv__arrow, .ds-mbtn-iv:focus-visible .ds-mbtn-iv__arrow { transform: translateX(0.35rem); } .ds-mbtn-iv:focus-visible { outline: 1px solid #c4a77d; outline-offset: 5px; }"
+    },
+    {
+      "name": "Text Action",
+      "kind": "button",
+      "refersTo": "nav-link",
+      "description": "Secondary action: label-type text led by a 1px gold rule that stretches on hover. There is no ghost button.",
+      "html": "<div style=\"background:#080808;padding:2rem\"><button class=\"ds-explore\">Explore the fragrance</button></div>",
+      "css": ".ds-explore { background: none; border: 0; padding: 0.6rem 0; cursor: pointer; color: #f0e9df; font-family: 'Jost', ui-sans-serif, system-ui, sans-serif; font-size: 0.6875rem; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; } .ds-explore::before { content: ''; display: inline-block; width: 1.75rem; height: 1px; margin-right: 0.85rem; vertical-align: middle; background: #c4a77d; transform-origin: right; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); } .ds-explore:hover::before, .ds-explore:focus-visible::before { transform: scaleX(1.6); } .ds-explore:focus-visible { outline: 1px solid #c4a77d; outline-offset: 5px; }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "nav-bar",
+      "description": "Fixed transparent header: spaced serif logo, centred label links with a wipe-in gold underline, dossier trigger at right.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav__logo\" href=\"#\">VÉLOR</a><ul class=\"ds-nav__links\"><li><a class=\"ds-nav__link\" href=\"#\" aria-current=\"true\">Revelation</a></li><li><a class=\"ds-nav__link\" href=\"#\">Anatomy</a></li><li><a class=\"ds-nav__link\" href=\"#\">Essence</a></li></ul><span></span></nav>",
+      "css": ".ds-nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 4.5rem; padding-inline: clamp(1.25rem, 3.6vw, 3.5rem); background: #080808; color: #f0e9df; } .ds-nav__logo { justify-self: start; font-family: 'Bodoni Moda', Didot, serif; font-optical-sizing: auto; font-size: 1.15rem; letter-spacing: 0.34em; margin-right: -0.34em; line-height: 1; color: inherit; text-decoration: none; } .ds-nav__links { display: flex; gap: clamp(1.5rem, 3vw, 3.25rem); list-style: none; margin: 0; padding: 0; } .ds-nav__link { position: relative; display: inline-block; padding-block: 0.6rem; color: rgb(240 233 223 / 0.62); text-decoration: none; font-family: 'Jost', ui-sans-serif, system-ui, sans-serif; font-size: 0.6875rem; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1); } .ds-nav__link::after { content: ''; position: absolute; left: 0; right: 0.32em; bottom: 0.2rem; height: 1px; background: #c4a77d; transform: scaleX(0); transform-origin: right; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); } .ds-nav__link:hover, .ds-nav__link[aria-current='true'], .ds-nav__link:focus-visible { color: #f0e9df; } .ds-nav__link:hover::after, .ds-nav__link[aria-current='true']::after, .ds-nav__link:focus-visible::after { transform: scaleX(1); transform-origin: left; } .ds-nav__link:focus-visible { outline: 1px solid #c4a77d; outline-offset: 5px; }"
+    },
+    {
+      "name": "Slate",
+      "kind": "custom",
+      "refersTo": "slate",
+      "description": "The film's clapperboard: scene number, scene title, timecode and a 1px progress bar. The only place scene numbers appear.",
+      "html": "<div style=\"background:#080808;padding:2rem\"><div class=\"ds-slate\"><span class=\"ds-slate__scene\">Sc. 03</span><span class=\"ds-slate__title\">Anatomy of Luxury</span><span class=\"ds-slate__tc\">00:01:12:08</span><span class=\"ds-slate__bar\"><span></span></span></div></div>",
+      "css": ".ds-slate { display: inline-grid; grid-template-columns: auto auto auto; align-items: baseline; column-gap: 1.4rem; row-gap: 0.55rem; color: rgb(240 233 223 / 0.62); font-family: 'Jost', ui-sans-serif, system-ui, sans-serif; font-size: 0.625rem; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; line-height: 1.4; font-variant-numeric: tabular-nums lining-nums; } .ds-slate__scene { color: #c4a77d; } .ds-slate__title { color: #f0e9df; } .ds-slate__bar { grid-column: 1 / -1; display: block; height: 1px; background: rgb(240 233 223 / 0.22); overflow: hidden; } .ds-slate__bar > span { display: block; height: 100%; background: #c4a77d; transform-origin: left; transform: scaleX(0.42); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); } .ds-slate:hover .ds-slate__bar > span { transform: scaleX(0.6); }"
+    },
+    {
+      "name": "Essence Meter",
+      "kind": "custom",
+      "refersTo": "slate",
+      "description": "Top / Heart / Base hairline meter: a gold fill scaling from the left across a faint 1px track.",
+      "html": "<div style=\"background:#080808;padding:2rem\"><div class=\"ds-meter\"><span class=\"ds-meter__track\"><span class=\"ds-meter__fill\"></span></span><ul><li>Top</li><li>Heart</li><li>Base</li></ul></div></div>",
+      "css": ".ds-meter { width: 20rem; display: grid; gap: 0.7rem; } .ds-meter__track { position: relative; order: 2; height: 1px; background: rgb(240 233 223 / 0.22); } .ds-meter__fill { position: absolute; inset: 0; background: #c4a77d; transform-origin: left; transform: scaleX(0.5); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); } .ds-meter:hover .ds-meter__fill { transform: scaleX(1); } .ds-meter ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: space-between; color: #f0e9df; font-family: 'Jost', ui-sans-serif, system-ui, sans-serif; font-size: 0.6875rem; letter-spacing: 0.32em; text-transform: uppercase; } .ds-meter li { line-height: 1; opacity: 0.55; } .ds-meter li:nth-child(2) { opacity: 1; }"
+    },
+    {
+      "name": "Dossier Sheet",
+      "kind": "card",
+      "refersTo": "dossier-sheet",
+      "description": "Editorial panel on ivory: serif title and lede, then hairline-divided definition lists with bronze label terms.",
+      "html": "<div class=\"ds-dossier\"><h2 class=\"ds-dossier__title\">Nº 01</h2><span class=\"ds-dossier__spec\">Extrait de Parfum · 50 ML</span><p class=\"ds-dossier__lede\">A presença não precisa de palavras.</p><div class=\"ds-dossier__block\"><dl class=\"ds-dossier__dl\"><div><dt>Top</dt><dd><span class=\"ds-dossier__note\">Bergamot</span></dd></div><div><dt>Heart</dt><dd><span class=\"ds-dossier__note\">Black Amber</span></dd></div></dl></div></div>",
+      "css": ".ds-dossier { width: min(42rem, 100%); background: #f0e9df; color: #141414; padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.5rem, 4.5vw, 4rem) 3rem; border-radius: 0; } .ds-dossier__title { margin: 0; font-family: 'Bodoni Moda', Didot, serif; font-optical-sizing: auto; font-weight: 400; font-size: clamp(3rem, 9vw, 5.5rem); line-height: 0.95; letter-spacing: -0.015em; } .ds-dossier__spec, .ds-dossier__dl dt { display: block; margin-top: 1.1rem; color: #6b5634; font-family: 'Jost', ui-sans-serif, system-ui, sans-serif; font-size: 0.6875rem; letter-spacing: 0.32em; text-transform: uppercase; } .ds-dossier__lede { font-family: 'Bodoni Moda', Didot, serif; font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem); line-height: 1.4; max-width: 26ch; margin: 1.4rem 0 0; color: rgb(20 20 20 / 0.8); } .ds-dossier__block { margin-top: clamp(2.5rem, 6vh, 4rem); padding-top: 1.25rem; border-top: 1px solid rgb(20 20 20 / 0.18); } .ds-dossier__dl { margin: 0; display: grid; gap: 1.25rem; } .ds-dossier__dl > div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; align-items: baseline; } .ds-dossier__dl dt { margin-top: 0; } .ds-dossier__dl dd { margin: 0; } .ds-dossier__note { font-family: 'Bodoni Moda', Didot, serif; font-size: 1.6rem; line-height: 1.15; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Studio Take",
+    "overview": "VÉLOR is shot, not laid out. The whole page is one continuous take inside a black cyclorama: a single fixed WebGL stage sits under the film, and every scene is a tall scroll track whose sticky frame holds the shot while the camera, the light and the bottle move. Light is the narrator. Gold appears where light falls; type is revealed the way light brightens on a surface, through clipping masks and hairlines that draw themselves, not through panels sliding into view. Nothing is boxed into sections, cards or grids; the bottle is the protagonist and the interface is the crew around it.\n\nThe density is low and the pace is slow. Large Didone type set against near-black does the emotional work; small, widely tracked Jost capitals do the logistical work (slate, labels, specs, navigation). Between them there is almost nothing: no fills, no shadows, no rounded containers, only 1px rules. The world has two lighting setups, the dark cyclorama and the ivory daylight set, and the chrome reads whichever one it is standing on.\n\nConfirmed rejections, from the brand commitments and the build: no SaaS components, no shadowed cards, no loud gradients, no template sections, no decorative icon clutter, no futuristic look, no fake commerce.",
+    "keyCharacteristics": [
+      "One fixed 3D stage under a sticky-scene scroll film; scenes are takes, not sections.",
+      "Near-black cyclorama with one warm accent, champagne gold, that behaves like light.",
+      "Bodoni Moda at optical size for everything that speaks; light Jost capitals for everything that informs.",
+      "Hairlines (1px) as the only structure; zero radius; no UI shadows.",
+      "Motion as revelation: mask reveals, scaleX rules, clip-path fills, weighted decelerating eases.",
+      "Tone-aware chrome that flips between dark and daylight with the set."
+    ],
+    "rules": [
+      { "name": "The Lit-Only Rule", "body": "Gold appears only where light would fall: a line, a dot, a pin, a filled meter, a focus ring, and short label-type captions on dark (callout titles, material facts, the signature). It is never a fill behind text, never a surface, never a gradient wash. If an element would still need gold with the lights off, it should be ivory.", "section": "colors" },
+      { "name": "The Daylight Hand-off Rule", "body": "When the set turns ivory, gold steps aside for Bronze on small text and Carbon on everything else. `html[data-tone=\"light\"]` remaps `--fg`, `--fg-dim`, `--fg-faint` and `--accent`; chrome must read those variables, never hard-code ivory or gold, so it follows the set automatically (the tone flips when background luminance crosses 0.32).", "section": "colors" },
+      { "name": "The Two Voices Rule", "body": "Serif for anything that should be felt (titles, names, quotes, ledes, menu items, footer scene links); Jost capitals for anything that should be read in passing (labels, specs, nav, buttons). Jost is never set large, and Bodoni is never set in capitals except the kinetic manifesto and the wordmark.", "section": "typography" },
+      { "name": "The Optical Size Rule", "body": "Every Bodoni setting keeps `font-optical-sizing: auto`. Hairline contrast must track the size; never pin the opsz axis.", "section": "typography" },
+      { "name": "The Frame-Not-Grid Rule", "body": "Lay text out relative to the bottle and the edges of the frame, never in a repeating card or column grid. If a scene could be swapped for another without moving its text, it has become a section.", "section": "layout" },
+      { "name": "The No-Shadow Rule", "body": "No `box-shadow` on any interface element. Separation comes from hairlines, tone and z-order; the only shadows in VÉLOR are the ones light casts in 3D.", "section": "elevation" },
+      { "name": "The Hairline Rule", "body": "Every line in the interface is exactly 1px, and it arrives by `scaleX` (or `scaleY`) from an origin, never by fading in place.", "section": "shapes" }
+    ],
+    "dos": [
+      "**Do** let light carry emphasis: a 1px gold rule scaling in, a gold dot, a brightening mask reveal (travel 130%, velor.out).",
+      "**Do** pair large Bodoni Moda (opsz auto, weight 400, negative tracking at display sizes) with Jost capitals at 0.6875rem and 0.32em tracking.",
+      "**Do** read `--fg`, `--fg-dim`, `--fg-faint` and `--accent` in any chrome that can sit over both the dark and ivory sets.",
+      "**Do** switch small accent text to Bronze (#6B5634) on ivory; gold fails contrast there.",
+      "**Do** keep every UI corner at 0px and every structural line at 1px.",
+      "**Do** compose each scene around the bottle and the frame edges, clearing the 4.5rem header and the `--gutter`.",
+      "**Do** keep scene numbering inside the slate, where it belongs to the film's apparatus."
+    ],
+    "donts": [
+      "**Don't** add `box-shadow`, shadowed cards, or any container with a fill and padding to hold content on the film.",
+      "**Don't** use gold as a background, a text fill on ivory, or inside a gradient.",
+      "**Don't** introduce a second warm accent or any saturated colour; the scene tints are lighting, not UI.",
+      "**Don't** put eyebrows, kickers or numbered section indices above titles; the slate already says where the visitor is.",
+      "**Don't** slide panels or text blocks across the screen as an entrance; reveal by mask, clip or scale.",
+      "**Don't** set Jost large or in bold, or set Bodoni in small labels.",
+      "**Don't** build a product hero plus feature grid plus buy button, or any action that promises commerce that does not exist."
+    ]
+  }
+}
