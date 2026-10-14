@@ -88,9 +88,14 @@ export function PerfumeBottle({ labelReady }: { labelReady: boolean }) {
     neckGlass.thickness = 0.2;
     const gold = new MeshPhysicalMaterial({
       color: MATERIALS.gold.color,
-      metalness: 1,
+      metalness: MATERIALS.gold.metalness,
       roughness: MATERIALS.gold.roughness,
       roughnessMap: rough,
+      envMapIntensity: MATERIALS.gold.envMapIntensity,
+      emissive: MATERIALS.gold.emissive,
+      emissiveIntensity: MATERIALS.gold.emissiveIntensity,
+      // The same streaks modulate the glow, so the inner light reads as brushed metal, not paint.
+      emissiveMap: rough,
       anisotropy: MATERIALS.gold.anisotropy,
       anisotropyMap: anisotropyDirection(),
       clearcoat: MATERIALS.gold.clearcoat,
@@ -179,6 +184,9 @@ export function PerfumeBottle({ labelReady }: { labelReady: boolean }) {
     // The foil glows with the room's light: dark in the intro, full once the bottle is lit.
     const lit = Math.min(1, p.presence * (0.04 + 0.96 * intro.light));
     mat.label.emissiveIntensity = MATERIALS.label.emissiveIntensity * lit;
+    // On the ivory set the softboxes already light the cap; the glow steps back there.
+    const daylight = Math.min(1, (0.2126 * p.bgR + 0.7152 * p.bgG + 0.0722 * p.bgB) * 1.6);
+    mat.gold.emissiveIntensity = MATERIALS.gold.emissiveIntensity * lit * (1 - 0.35 * daylight);
   });
 
   const b = BOTTLE.body;

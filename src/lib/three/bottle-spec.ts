@@ -86,7 +86,20 @@ export const MATERIALS = {
     specularIntensity: 1,
   },
   liquid: { color: "#6b3c12", roughness: 0.12, emissive: "#2e1605", emissiveIntensity: 0.45 },
-  gold: { color: "#d6b98a", roughness: 0.36, anisotropy: 0.8, clearcoat: 0.25, clearcoatRoughness: 0.2 },
+  /** Brushed gold. Not a pure mirror: a little diffuse catches the key light, reflections are
+   *  boosted, and a warm inner glow (through the brushing map) keeps the face gold even where it
+   *  only mirrors the black cyclorama. The glow follows the scene's light and eases off in daylight. */
+  gold: {
+    color: "#ddbf8c",
+    metalness: 0.86,
+    roughness: 0.34,
+    anisotropy: 0.8,
+    clearcoat: 0.3,
+    clearcoatRoughness: 0.18,
+    envMapIntensity: 1.5,
+    emissive: "#c39a5a",
+    emissiveIntensity: 0.4,
+  },
   goldPolished: { color: "#dcc193", roughness: 0.14 },
   /** Foil print: partly metallic so it still catches the softboxes, but lit from within
    *  (emissive, scaled by the scene's light) so it never drops out against the dark glass. */
