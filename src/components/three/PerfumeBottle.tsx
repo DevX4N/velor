@@ -15,7 +15,7 @@ import {
 } from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { BOTTLE, LAYOUT, MATERIALS } from "@/lib/three/bottle-spec";
-import { current } from "@/lib/three/director";
+import { current, intro } from "@/lib/three/director";
 import { useBottleMotion } from "@/lib/three/useBottleMotion";
 import { anisotropyDirection, brushedRoughness, contactShadow, fontFamily, labelAlpha } from "@/lib/three/textures";
 
@@ -118,7 +118,7 @@ export function PerfumeBottle({ labelReady }: { labelReady: boolean }) {
     const nozzle = new MeshStandardMaterial({ color: "#050403", roughness: 0.6 });
     const label = new MeshPhysicalMaterial({
       color: MATERIALS.label.color,
-      metalness: 1,
+      metalness: MATERIALS.label.metalness,
       roughness: MATERIALS.label.roughness,
       emissive: MATERIALS.label.emissive,
       emissiveIntensity: MATERIALS.label.emissiveIntensity,
@@ -150,10 +150,11 @@ export function PerfumeBottle({ labelReady }: { labelReady: boolean }) {
   useEffect(() => {
     if (!labelReady) return;
     const tex = labelAlpha(fontFamily("--font-bodoni", "serif"), fontFamily("--font-jost", "sans-serif"));
+    tex.anisotropy = maxAnisotropy;
     mat.label.alphaMap = tex;
     mat.label.needsUpdate = true;
     return () => tex.dispose();
-  }, [labelReady, mat]);
+  }, [labelReady, mat, maxAnisotropy]);
 
   useEffect(
     () => () => {
@@ -175,6 +176,9 @@ export function PerfumeBottle({ labelReady }: { labelReady: boolean }) {
     // Contact shadow only exists on the daylight set.
     const p = current;
     mat.shadow.opacity = p.shadow * 0.85 * Math.min(1, p.presence * 1.2);
+    // The foil glows with the room's light: dark in the intro, full once the bottle is lit.
+    const lit = Math.min(1, p.presence * (0.04 + 0.96 * intro.light));
+    mat.label.emissiveIntensity = MATERIALS.label.emissiveIntensity * lit;
   });
 
   const b = BOTTLE.body;

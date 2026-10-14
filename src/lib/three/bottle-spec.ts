@@ -88,5 +88,7 @@ export const MATERIALS = {
   liquid: { color: "#6b3c12", roughness: 0.12, emissive: "#2e1605", emissiveIntensity: 0.45 },
   gold: { color: "#d6b98a", roughness: 0.36, anisotropy: 0.8, clearcoat: 0.25, clearcoatRoughness: 0.2 },
   goldPolished: { color: "#dcc193", roughness: 0.14 },
-  label: { color: "#d8bc8c", roughness: 0.28, emissive: "#3a2a14", emissiveIntensity: 0.4 },
+  /** Foil print: partly metallic so it still catches the softboxes, but lit from within
+   *  (emissive, scaled by the scene's light) so it never drops out against the dark glass. */
+  label: { color: "#dcc193", metalness: 0.55, roughness: 0.32, emissive: "#c9a978", emissiveIntensity: 0.62 },
 };

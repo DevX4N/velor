@@ -22,8 +22,8 @@ const GLB_URL = process.env.NEXT_PUBLIC_VELOR_BOTTLE_GLB;
 
 const QUALITY: Record<Tier, { dpr: [number, number]; particles: number; env: number; transmission: number }> = {
   high: { dpr: [1, 1.75], particles: 1400, env: 512, transmission: 1 },
-  mid: { dpr: [1, 1.5], particles: 900, env: 256, transmission: 0.75 },
-  low: { dpr: [1, 1.25], particles: 480, env: 128, transmission: 0.5 },
+  mid: { dpr: [1, 1.75], particles: 900, env: 256, transmission: 1 },
+  low: { dpr: [1, 1.5], particles: 480, env: 128, transmission: 0.9 },
 };
 
 /** Compiles every shader up front, then tells the preloader the stage can be shown. */
@@ -57,10 +57,10 @@ export default function Stage() {
   const q = QUALITY[tier];
   const [dpr, setDpr] = useState<number>(() => Math.min(window.devicePixelRatio || 1, q.dpr[1]));
   const [fontsReady, setFontsReady] = useState(false);
-  // Product close-ups (hero, revelation, daylight) carry no particles: spend the budget on pixels.
+  // Only the essence scene carries particles; everywhere else the bottle is the whole frame,
+  // so phones render it at up to 2× for clean glass edges and a sharp label.
   const scene = useExperience((s) => s.activeScene);
-  const showcase = scene === "awakening" || scene === "revelation" || scene === "desire";
-  const effectiveDpr = showcase && tier !== "high" ? Math.min(window.devicePixelRatio || 1, 2) : dpr;
+  const effectiveDpr = scene !== "essence" && tier !== "high" ? Math.max(dpr, Math.min(window.devicePixelRatio || 1, 2)) : dpr;
 
   // Canvas textures (label, wordmark) need the real faces, not the fallback metrics.
   useEffect(() => {
@@ -101,7 +101,7 @@ export default function Stage() {
         frameloop="demand"
         dpr={effectiveDpr}
         camera={{ fov: FRAMING.fov, near: 0.1, far: 40, position: [0, 0, 8] }}
-        gl={{ antialias: tier !== "low", powerPreference: "high-performance", alpha: false, stencil: false }}
+        gl={{ antialias: true, powerPreference: "high-performance", alpha: false, stencil: false }}
         onCreated={({ gl, invalidate }) => {
           gl.toneMapping = ACESFilmicToneMapping;
           gl.toneMappingExposure = 1.05;
@@ -114,7 +114,7 @@ export default function Stage() {
         }}
       >
         <PerformanceMonitor
-          onDecline={() => setDpr((d) => Math.max(1, d - 0.25))}
+          onDecline={() => setDpr((d) => Math.max(1.25, d - 0.25))}
           onIncline={() => setDpr((d) => Math.min(q.dpr[1], d + 0.25))}
           flipflops={3}
         />

@@ -80,8 +80,10 @@ function spaced(ctx: CanvasRenderingContext2D, text: string, x: number, y: numbe
 
 /** The label: gold foil printed on the front of the glass. White = foil, black = clear glass. */
 export function labelAlpha(serif: string, sans: string) {
-  const W = 1024;
+  // Printed at 2048px so the small lines stay crisp on phones and in close-ups.
+  const W = 2048;
   const H = Math.round((W * 0.5) / 0.66);
+  const k = W / 1024;
   const { c, ctx } = canvas(W, H);
   ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, W, H);
@@ -89,26 +91,26 @@ export function labelAlpha(serif: string, sans: string) {
   ctx.strokeStyle = "#fff";
   ctx.textBaseline = "alphabetic";
 
-  ctx.font = `400 168px ${serif}`;
-  spaced(ctx, "VÉLOR", W / 2, H * 0.4, 26);
+  ctx.font = `500 ${172 * k}px ${serif}`;
+  spaced(ctx, "VÉLOR", W / 2, H * 0.4, 26 * k);
 
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 2.5 * k;
   ctx.beginPath();
-  ctx.moveTo(W * 0.36, H * 0.5);
-  ctx.lineTo(W * 0.64, H * 0.5);
+  ctx.moveTo(W * 0.35, H * 0.5);
+  ctx.lineTo(W * 0.65, H * 0.5);
   ctx.stroke();
 
-  ctx.font = `400 64px ${serif}`;
-  spaced(ctx, "Nº 01", W / 2, H * 0.65, 8);
+  ctx.font = `500 ${70 * k}px ${serif}`;
+  spaced(ctx, "Nº 01", W / 2, H * 0.655, 8 * k);
 
-  ctx.font = `400 30px ${sans}`;
-  spaced(ctx, "EXTRAIT DE PARFUM", W / 2, H * 0.79, 13);
-  ctx.font = `300 24px ${sans}`;
-  spaced(ctx, "50 ML  ·  1.7 FL. OZ.", W / 2, H * 0.88, 9);
+  ctx.font = `500 ${38 * k}px ${sans}`;
+  spaced(ctx, "EXTRAIT DE PARFUM", W / 2, H * 0.8, 14 * k);
+  ctx.font = `400 ${31 * k}px ${sans}`;
+  spaced(ctx, "50 ML  ·  1.7 FL. OZ.", W / 2, H * 0.9, 10 * k);
 
   const tex = new CanvasTexture(c);
   tex.colorSpace = NoColorSpace;
-  tex.anisotropy = 8;
+  tex.anisotropy = 16;
   tex.minFilter = LinearMipmapLinearFilter;
   return tex;
 }
